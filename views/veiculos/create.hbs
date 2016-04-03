@@ -1,0 +1,37 @@
+﻿<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>
+                <span class="help-li glyphicon glyphicon-plus" aria-hidden="true"></span>Novo Veículo
+            </h4>
+        </div>
+        <div class="panel-body panel-footer">
+            <form method="post">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Placa</span>
+                    <input type="text" class="form-control" id="placa" name="placa" placeholder="Placa (letras e números)" maxlength="8" required onfocus="formatPlaca()" onblur="toUpper(this.id)" value="{{input.placa}}" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">Marca</span>
+                    <input type="text" class="form-control" id="marca" name="marca" placeholder="Marca do Veículo" maxlength="20" required value="{{input.marca}}" onblur="formatNome(this.id)" aria-describedby="basic-addon2">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Cor</span>
+                    <input type="text" class="form-control" id="cor" name="cor" placeholder="Cor" maxlength="20" required value="{{input.cor}}" onblur="formatNome(this.id)" aria-describedby="basic-addon3">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">Dispositivo</span>
+                    <input type="text" class="form-control" id="numeroSerie" name="numeroSerie" placeholder="Serial" maxlength="20" required value="{{input.numeroSerie}}" onblur="toUpper(this.id)" aria-describedby="basic-addon4">
+                </div>
+                <div>
+                    <button type="submit" id="acionar" class="btn btn-md btn-primary">
+                        Adicionar Veículo
+                    </button>
+                    {{#if error}}
+                    <div style="color:red;">{{error}}</div>
+                    {{/if}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

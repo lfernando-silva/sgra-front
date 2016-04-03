@@ -1,0 +1,127 @@
+<div class="container">
+    {{#if defaultVeiculo}}
+    <div class="well well-sm">
+        Veículo: <span id="veiculo">{{defaultVeiculo.marca}} {{defaultVeiculo.placa}}</span>
+        <form name="excluirVeiculo" id="excluirVeiculo" method="get" action="/veiculos/excluir/{{defaultVeiculo.placa}}">
+            <button type="submit" class="btn btn-danger btn-xs">
+                Remover Veículo
+            </button>
+        </form>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <!--Connection panel-->
+                    <div id="conectado" class="col-md-3">
+                        {{#if defaultVeiculo.dispositivo.isConectado}}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <picture id="conectado" class="car-info text-primary text-center">
+                                    <img src="../images/connected.png" width="60" height="60" alt="Conectado" />
+                                </picture>
+                            </div>
+                            <div class="success panel-footer">Conectado</div>
+                        </div>
+                        {{else}}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <picture id="desconectado" class="car-info text-primary text-center">
+                                    <img src="../images/disconnected.png" width="60" height="60" alt="Desconectado" />
+                                </picture>
+                            </div>
+                            <div class="danger panel-footer">Desconectado</div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <!--End Connection panel-->
+                    <!--Alarm alert panel-->
+                    <div id="alarme-disparando" class="col-md-3">
+                        {{#if defaultVeiculo.dispositivo.isAberto}}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <picture id="com-notificacao" class="car-info text-primary text-center">
+                                    <img src="../images/alert.png   " width="60" height="60" alt="ALARME DISPARANDO!!" />
+                                </picture>
+                            </div>
+                            <div class="danger panel-footer">Alarme Disparando</div>
+                        </div>
+                        {{else}}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <picture id="sem-notificacao" class="car-info text-primary text-center">
+                                    <img src="../images/protected.png" width="60" height="60" alt="Alarme Seguro" />
+                                </picture>
+                            </div>
+                            <div class="success panel-footer">Alarme Seguro</div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <!--End Alarm alert panel-->
+                    <!--Status Panel-->
+                    {{#if defaultVeiculo.dispositivo.ativacoes.[0].status}}
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <picture id="sem-notificacao" class="car-info text-primary text-center">
+                                    <img src="../images/ative.png" width="60" height="60" alt="Alarme Seguro" />
+                                </picture>
+                            </div>
+                            <div class="warning panel-footer">ATIVADO</div>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <picture id="sem-notificacao" class="car-info text-primary text-center">
+                                    <img src="../images/inative.png" width="60" height="60" alt="Alarme Seguro" />
+                                </picture>
+                            </div>
+                            <div class="warning panel-footer">DESATIVADO</div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <!--End Status panel-->
+                    <!--Info panel-->
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body ultima-ativacao-text history">
+                                <picture id="sem-notificacao" class="car-info text-primary text-center">
+                                    <img src="../images/updated.png" width="60" height="60" alt="Alarme Seguro" />
+                                </picture>
+                            </div>
+                            <div class="history panel-footer">Em: {{defaultVeiculo.dispositivo.ativacoes.[0].data}} às {{defaultVeiculo.dispositivo.ativacoes.[0].horario}}</div>
+                        </div>
+                    </div>
+                    <!--End Info panel-->
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form name="aciona" id="aciona" method="get" action="/veiculos/aciona/d-{{defaultVeiculo.dispositivo.numeroSerie}}_{{defaultVeiculo.dispositivo.ativacoes.[0].status}}">
+                            <button type="submit" id="acionar" class="btn btn-warning btn-md">
+                                ACIONAR ALARME
+                            </button>
+                        </form>
+                    </div>
+                    <div class="warning panel-footer">Clique no botão para acionar o alarme do veículo</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="well well-lg">
+        <div class="panel-body ultima-ativacao-text history">
+            <picture id="sem-notificacao" class="car-info text-primary text-center">
+                <img src="../images/none.png" alt="Nenhum Veículo Cadastrado" />
+            </picture>
+        </div>
+        <span id="nenhum-veiculo" class="history">Que tal cadastrar um veículo?</span>
+        <form name="novoVeiculo" method="get" action="/veiculos/create">
+            <button type="submit" class="btn btn-primary btn-md" id="btnAdicionarVeiculo">
+                Adicionar Novo Veículo
+            </button>
+        </form>
+    </div>
+    {{/if}}
+</div>

@@ -1,0 +1,156 @@
+@font-face {
+    font-family: "Mandator";
+    src: url(../fonts/MANDATOR.TTF);
+}
+
+body {
+    background-color: #eeeeee;
+}
+
+.sidebar-nav {
+    font-family: Arial;
+}
+
+#dropdown-icon {
+    margin-left: 65%;
+}
+
+.placa {
+    font-family: Mandator;
+    font-size: 18px;
+    text-align: center;
+    color: black;
+    background-color: #bfbfbf;
+    border: 3px solid black;
+    border-radius: 3px 3px;
+    width: 100%;
+}
+
+.dropdown-div{
+    font-family: Mandator;
+    font-size: 16px;
+    text-align: center;
+    color: black;
+    background-color: #bfbfbf;
+    border: 3px solid black;
+    border-radius: 3px 3px;
+    width: 55%;
+    margin: 5% 25% 5% 25%;
+}
+
+
+.nav-second-level {
+    margin-bottom: 8%;
+    background-color: #e0e0e0;
+}
+
+.well {
+    background: unset;
+    background-color: #eeeeee;
+    border: none;
+    margin-top: 3%;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    color: #1a1919;
+    font-size: 14px;
+    font-family: Arial;
+}
+
+.panel-body {
+    background-color: #eeeeee;
+}
+
+.panel-footer{
+    background-color: unset;
+    font-weight: bold;
+}
+
+.panel{
+    background-color: unset;
+    font-weight: bold;
+    margin: 1% 0 0 0;
+}
+
+.danger {
+    color: #ff1616;
+}
+
+.success {
+    color: #41bb00;
+}
+
+.warning {
+    color: #f8aa08;
+}
+
+.history {
+    color: #229adf;
+}
+
+.info {
+    margin-top: 3%;
+    font-size: 30px;
+    text-align: center;
+}
+
+.help-li{
+    margin: 0 2% 0 2%;
+}
+
+.input-group{
+    margin: 1% 20% 1% 20%;
+}
+
+.btn-cancelar{
+    color: white;
+    text-decoration-style: none;
+    text-transform:unset;
+}
+
+.ultima-ativacao-text {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#info-text{
+    text-align:justify;
+    font-size: 14pt;
+    text-indent: 2em;
+    padding: 5%;
+}
+#page-wrapper {
+    display: block;
+    text-align: center;
+    height: auto;
+}
+
+#novoVeiculo {
+    margin-top: 10%;
+    margin-left: 15%;
+}
+
+#nenhum-veiculo{
+    font-size: 24pt;
+    
+}
+
+#veiculo-atual {
+    margin-top: 10%;
+}
+
+#veiculo {
+    font-weight: bold;
+}
+
+#side-menu {
+    background-color: #e0e0e0;
+}
+
+#cadastro{
+    text-align: center;
+    background-color: #eeeeee;
+}
+
+.dropdown-li{
+    text-align: center;
+}

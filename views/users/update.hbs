@@ -1,0 +1,37 @@
+﻿<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>
+                <span class="help-li glyphicon glyphicon-cog" aria-hidden="true"></span>Atualizar Cadastro
+            </h4>
+        </div>
+        <div class="panel-body panel-footer">
+            <form method="post">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">E-mail</span>
+                    <input type="text" class="form-control" id="email" name="email" maxlength="40" readonly required placeholder="E-mail (até 40 caracteres)" value="{{user.email}}" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">Nome</span>
+                    <input type="text" class="form-control" id="nome" name="nome" maxlength="40" required placeholder="Nome (até 40 caracteres)" onblur="formatNome(this.id)" value="{{user.nome}}" aria-describedby="basic-addon2">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">CPF</span>
+                    <input type="text" class="form-control" id="cpf" name="cpf" maxlength="11" required onfocus="formatCpf()" placeholder="CPF (apenas números)" value="{{user.cpf}}" aria-describedby="basic-addon3">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">Senha (8 Caracteres)</span>
+                    <input type="password" class="form-control" id="password" name="password" maxlength="8" placeholder="Senha (8 caracteres)" autocomplete="off" required aria-describedby="basic-addon4">
+                </div>
+                <div>
+                    <button type="submit" id="acionar" class="btn btn-md btn-success">
+                        Atualizar
+                    </button>
+                    {{#if error}}
+                    <div style="color:red;">{{error}}</div>
+                    {{/if}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

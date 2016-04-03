@@ -1,0 +1,5 @@
+﻿{
+  "meta": "Development",
+  "client": "mongodb",
+  "mongoUri": "mongodb://localhost:27017/alarme"
+}
