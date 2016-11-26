@@ -10,32 +10,17 @@ router.get('/', function (req, res) {
 });
 
 router.get('/help', function (req, res) {
-    var user = req.user;
-    var vm = {
-        title: 'Ajuda',
-        user: user,
-        veiculos: user.veiculos
-    };
-    res.render('users/help', vm);
+    res.render('users/help', getSession(req,'Ajuda'));
 });
 
 router.get('/about', function (req, res) {
-    var user = req.user;
-    var vm = {
-        title: 'Sobre',
-        user: user,
-        veiculos: user.veiculos
-    };
-    res.render('users/about', vm);
+    res.render('users/about', getSession(req, 'Sobre'));
 });
 
 /* GET users/view listing. */
 router.get('/create', function (req, res) {
     //nessa variável, podemos setar qualquer tag na página destino
-    var vm = {
-        title: 'Criar uma conta'
-    };
-    res.render('users/create', vm);
+    res.render('users/create', getSession(req, 'Criar uma conta'));
 });
 
 router.post('/create', function (req, res) {
@@ -80,19 +65,11 @@ router.get('/logout', function (req, res, next) {
 });
 
 router.get('/update', function (req, res) {
-    //nessa variável, podemos setar qualquer tag na página destino
-    var user = req.user;
-    
     userService.findUser(user.email, function (err) {
         if (!err) {
-            var vm = {
-                title: 'Atualizar Dados',
-                user: user,
-                veiculos: user.veiculos
-            };
-            res.render('users/update', vm);
-        }
-    })
+            res.render('users/update', getSession(req, 'Atualizar Dados'));
+        };
+    });
 });
 
 router.post('/update', function (req, res) {
@@ -104,15 +81,9 @@ router.post('/update', function (req, res) {
 });
 
 router.get('/delete', function (req, res) {
-    var user = req.user;
     userService.findUser(user.email, function (err) {
         if (!err) {
-            var vm = {
-                title: 'Excluir Conta',
-                user: user,
-                veiculos: user.veiculos
-            };
-            res.render('users/delete', vm);
+            res.render('users/delete', getSession(req, 'Excluir Usuário'));
         }
     })
 });
@@ -126,5 +97,13 @@ router.post('/delete', function (req, res) {
         }
     })
 });
+
+function getSession(req, title){
+    return {
+        title: title || 'Sistema',
+        user: req.user || {},
+        veiculos: req.user.veiculos || {}
+    };
+}
 
 module.exports = router;
