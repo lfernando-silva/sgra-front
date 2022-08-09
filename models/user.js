@@ -11,13 +11,11 @@ var userSchema = new Schema({
 });
 
 function find(value, callback) {
-    var userService = require("../services/user-service");
-    userService.findUser(value, function (err, user) {
-        return err? callback(false) : callback(!user);
+    User.findOne({ email: value }, function (err, user) {
+        return user? callback(false) : callback(!user);
     });
 }
 
-//validar email, chamada a função definida no user-service.js
 userSchema.path('email').validate(find, "Email já existente!");
 var User = mongoose.model("User", userSchema);
 

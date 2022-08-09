@@ -1,11 +1,9 @@
 ﻿var express = require('express');
 var router = express.Router();
-var restrict = require('../config/restrict');
 var userService = require('../services/user-service');
 
 /* GET veiculos/ */
-router.get('/', restrict, function (req, res) {
-    
+router.get('/', function (req, res) {
     var vm = {
         title: 'Veículos',
         user: req.user,
@@ -15,7 +13,7 @@ router.get('/', restrict, function (req, res) {
     res.render('veiculos/index', vm);
 });
 
-router.get('/create', restrict, function (req, res) {
+router.get('/create', function (req, res) {
     var vm = {
         title: 'Veículos',
         nome: req.user ? req.user.nome : null, // se autenticou, exibir primeiro nome, senão, null

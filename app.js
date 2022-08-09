@@ -1,4 +1,5 @@
 ﻿var express = require('express');
+var dotenv = require('dotenv');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -7,15 +8,14 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
-var connectMongo = require('connect-mongo');
+var MongoStore = require('connect-mongo');
+
+dotenv.config();
 
 var config = require('./config/config.js');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var veiculos = require('./routes/veiculos');
-
-//Guardar dados da sessão, "lembrar"
-var MongoStore = connectMongo(expressSession);
 
 var passportConfig = require('./config/passport-config');
 var restrict = require('./config/restrict');
@@ -40,9 +40,9 @@ app.use(expressSession(
         secret: 'ifet',
         saveUninitialized: false,
         resave: false,
-        store: new MongoStore({
-            mongooseConnection: mongoose.connection
-        })//armazena sessão no banco
+        store: MongoStore.create({
+            mongoUrl: config.mongoUri
+        })
     }
 ));
 
@@ -53,39 +53,20 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/veiculos', veiculos);
+app.use('/veiculos', restrict, veiculos);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
-    next(err);
+    return next(err);
 });
 
-// error handlers
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function (err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
 app.use(function (err, req, res, next) {
-    var nome = req.user.nome;
-    var vm = {
-        nome: nome
-    }
     res.status(err.status || 500);
-    res.render('error', vm, {
+    return res.render('error', {
         message: err.message,
-        error: {}
+        error: err
     });
 });
 

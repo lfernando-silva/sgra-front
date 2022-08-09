@@ -3,17 +3,18 @@ var router = express.Router();
 var userService = require('../services/user-service');
 var passport = require('passport');
 var config = require('../config/config.js');
+var restrict = require('../config/restrict');
 
 /* GET users listing. */
-router.get('/', function (req, res) {
+router.get('/', restrict, function (req, res) {
     res.send('USERS');
 });
 
-router.get('/help', function (req, res) {
+router.get('/help', restrict, function (req, res) {
     res.render('users/help', getSession(req,'Ajuda'));
 });
 
-router.get('/about', function (req, res) {
+router.get('/about', restrict, function (req, res) {
     res.render('users/about', getSession(req, 'Sobre'));
 });
 
@@ -64,15 +65,15 @@ router.get('/logout', function (req, res, next) {
     res.redirect('/');
 });
 
-router.get('/update', function (req, res) {
-    userService.findUser(user.email, function (err) {
+router.get('/update', restrict, function (req, res) {
+    userService.findUser(req.user.email, function (err) {
         if (!err) {
             res.render('users/update', getSession(req, 'Atualizar Dados'));
         };
     });
 });
 
-router.post('/update', function (req, res) {
+router.post('/update', restrict, function (req, res) {
     userService.updateUser(req.body, function (err) {
         if (!err) {
             res.redirect('/veiculos');
@@ -80,15 +81,16 @@ router.post('/update', function (req, res) {
     })
 });
 
-router.get('/delete', function (req, res) {
-    userService.findUser(user.email, function (err) {
+router.get('/delete', restrict, function (req, res) {
+    var email = req.user.email;
+    userService.findUser(email, function (err) {
         if (!err) {
             res.render('users/delete', getSession(req, 'Excluir Usuário'));
         }
     })
 });
 
-router.post('/delete', function (req, res) {
+router.post('/delete', restrict, function (req, res) {
     var email = req.user.email;
     userService.deleteUser(email, function (err) {
         if (!err) {
@@ -101,8 +103,8 @@ router.post('/delete', function (req, res) {
 function getSession(req, title){
     return {
         title: title || 'Sistema',
-        user: req.user || {},
-        veiculos: req.user.veiculos || {}
+        user: req.user || null,
+        veiculos: req.user ? req.user.veiculos : null
     };
 }
 

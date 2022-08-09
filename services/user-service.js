@@ -4,21 +4,21 @@ var User = require('../models/user');
 
 var userService = {
     addUser: function (user, next) {
-        
         var tasks = [
             async.apply(bcrypt.hash, user.password, 10),
-            build,
+            function(hash, cb){
+                user.password = hash;
+                return build(user, cb);
+            },
             save
         ];
         async.waterfall(tasks, function (err, done) {
-            return callback(err, done);
+            return next(err, done);
         });
     },
     
     findUser: function (email, callback) {
-        User.findOne({ email: email }, function (err, user) {
-            return callback(err, user);
-        });
+        return User.findOne({ email: email }, callback);
     },
     
     findUserDispositivo : function (dispositivo, callback) {
@@ -98,9 +98,7 @@ var userService = {
                 return update(where, uset, callback);
             }
         ];
-        async.waterfall(tasks, function (err, done) {
-            return callback(done);
-        });
+        return async.waterfall(tasks, callback);
     },
     updateUserRemoveVeiculo : function (email, placa, callback) {
         
@@ -132,12 +130,12 @@ var userService = {
     }
 }
 
-function build(hash, callback) {
+function build(user, callback) {
     var newUser = new User({
         nome: user.nome,
         cpf: user.cpf,
         email: user.email.toLowerCase(),//para garantir que todo email sempre estará minúsculo ao salvar
-        password: hash, //senha criptografada
+        password: user.password, //senha criptografada
         veiculos: []
     });
     return callback(null, newUser);
@@ -156,7 +154,7 @@ function update(where, uset, callback){
 }
 
 function buildAtivacao(status) {
-    var dateTime = getDateTime();
+    var dateTime = getDateTime(new Date());
     return {
         status: status,
         horario: dateTime.horario,
@@ -164,7 +162,7 @@ function buildAtivacao(status) {
     }
 }
 
-function getDateTime() {
+function getDateTime(now) {
     return {
         horario: now.toLocaleTimeString(),
         data: now.toLocaleDateString()
